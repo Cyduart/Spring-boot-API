@@ -1,14 +1,16 @@
 package com.example.CrudAPI.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name ="TB_PRODUCTS")
 public class ProductModel implements Serializable {
     private static final long serialVersionUID= 1L;
