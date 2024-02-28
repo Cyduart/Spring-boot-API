@@ -1,4 +1,5 @@
 package com.example.CrudAPI.controllers;
+
 import com.example.CrudAPI.dtos.ProductRecordDto;
 import com.example.CrudAPI.models.ProductModel;
 import com.example.CrudAPI.repositories.ProductRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,6 +41,21 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
 
     }
+
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
+                                                @RequestBody @Valid ProductRecordDto productRecordDto){
+        Optional<ProductModel> productO = productRepository.findById(id);
+        if (productO.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product Not Found");
+        }
+        var productModel = productO.get();
+        BeanUtils.copyProperties(productRecordDto, productModel);
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(productModel));
+
+    }
+
+
 
 
 
