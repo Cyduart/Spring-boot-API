@@ -31,7 +31,7 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         List<ProductModel> productsList= productRepository.findAll();
-        if (productsList.isEmpty()){
+        if (!productsList.isEmpty()){
             for (ProductModel product: productsList){
                 UUID id = product.getIdProduct();
                         product.add(linkTo(methodOn(ProductController.class).getOneProduct(id)).withSelfRel());
